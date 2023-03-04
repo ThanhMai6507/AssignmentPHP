@@ -1,0 +1,24 @@
+{
+    "1":
+    {
+        "question": "Vừa gà vừa chó, bó lại cho tròn, ba mươi sáu con, một trăm chân chẵn, hỏi có mấy gà, mấy chó",
+        "answer": {
+            "0": "100 gà, 100 chó",  		
+            "1": "10 gà, 10 chó", 
+            "2": "20 gà, 20 chó", 		
+            "3": "5 gà, 5 chó" 
+        },
+        "correct_answer": "10 gà, 10 chó"
+    },
+    "2":
+    {
+        "question": "Rồng đất là con gì",
+        "answer": {
+            "0": "gà",  		
+            "1": "chó", 
+            "2": "voi", 		
+            "3": "giun" 
+        },
+        "correct_answer": "giun"
+    }
+}

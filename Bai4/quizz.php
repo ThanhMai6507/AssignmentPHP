@@ -10,39 +10,31 @@
 <?php 
     session_start();
 
-    // $question = [];
-    // $quests = ['question1.txt', 'question2.txt'];
-    // foreach ($quests as $file) {
-    //     $content = file_get_contents($file);
-    //     $question[] = $content;
-    // }
+    $data = file_get_contents('data.json');
+    $decoded_json = json_decode($data, true);
+    $question = [];
+    $answer = [];
+    $correct_answer = [];
 
-    // $answer = [];
-    // $ans = ['answer1.txt', 'answer2.txt'];
-    // foreach ($ans as $file) {
-    //     $content = explode("\n", file_get_contents($file));
-    //     $answer[] = $content;
-    // }
-
-    // $correct_answer = [];
-    // $true_ans = ['correct_answer1.txt', 'correct_answer2.txt'];
-    // foreach ($true_ans as $file) {
-    //     $content = explode("\n", file_get_contents($file));
-    //     $correct_answer[] = $content;
-    // }
-    // $a = array_values($correct_answer);
-
-    // print_r($a);
-
-    $question = array(1 => "Vừa gà vừa chó, bó lại cho tròn, ba mươi sáu con, một trăm chân chẵn, hỏi có mấy gà, mấy chó", 
-                      2 => "Rồng đất là con gì");
-
-    $answer = array(1 => array("100 gà, 100 chó" => 0, "10 gà, 10 chó" => 1, "20 gà, 20 chó" => 0, "5 gà, 5 chó" => 0), 
-                    2 => array("gà" => 0, "dế" => 0, "voi" => 0, "giun" => 1));
+    //read data
+    foreach($decoded_json as $key => $value) {
+        $question[] = $decoded_json[$key]["question"];
+        $answer_i = [];
+        foreach ($decoded_json[$key]["answer"] as $key_ans => $value_ans) {
+            $answer_i[] = $value_ans;
+        }
+        $answer[] = $answer_i;
+        $correct_answer[] = $decoded_json[$key]["correct_answer"];
+    }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["answer"] = $answer;
         $_SESSION["question"] = $question;
+        $_SESSION["correct_answer"] = $correct_answer;
+        for ($i = 0; $i < count($question); $i++) { 
+            $key = "question_".strval($i);
+            $_SESSION[$key] = $_POST[$key];
+        }
         header("Location: submit.php");
     }
 
@@ -52,11 +44,12 @@
     <h1>Trắc nghiệm thông minh</h1>
     <?php
         foreach ($question as $key => $value) {
-            echo "<p>Câu {$key}: {$value}</p>";
+            $id = $key + 1;
+            echo "<p>Câu {$id}: {$value} </p>";
             foreach ($answer as $key_ans => $value_ans) {
                 if ($key == $key_ans){
                     foreach ($value_ans as $vlue => $dan) {
-                        echo "<input type=\"radio\" name=\"question_{$key_ans}\" value=\"{$vlue}\"> {$vlue}<br>";
+                        echo "<input type=\"radio\" name=\"question_{$key_ans}\" value=\"{$vlue}\"> {$dan}<br>";
                     }
                 }
             }
