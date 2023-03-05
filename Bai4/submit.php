@@ -23,13 +23,9 @@
 
         $ans_success = array(); // mảng lưu chỉ số đáp án đúng
 
-        for ($i = 0; $i < count($question); $i++) { 
-            $ans_success[] = -1;
-        }
-
         foreach ($answer as $key_ans => $value_ans) {
             foreach ($value_ans as $vlue => $dan) {
-                if (strcmp(trim($dan), trim($correct_answer[$key_ans])) === 0) {
+                if (strcmp($dan, $correct_answer[$key_ans]) === 0) {
                     $ans_success[$key_ans] = $vlue;
                     break;
                 }
