@@ -1,0 +1,11 @@
+button{
+    margin-left: 45%;
+    margin-top: 20px;
+    background-color: rgb(109, 172, 47);
+}
+.success, .success2{
+    accent-color: green;
+}
+.fail{
+    accent-color: red;
+}
